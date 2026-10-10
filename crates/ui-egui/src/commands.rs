@@ -598,6 +598,13 @@ pub(crate) fn registry_menu(app: &mut PdfCraftApp, ui: &mut egui::Ui, menu: &str
             app.execute(spec.id);
             ui.close();
         }
+        if spec.id == "file.revert" {
+            let has_doc = app.active_ids().is_some();
+            if let Some(section) = &mut app.file_menu {
+                section(ui, has_doc);
+                ui.separator();
+            }
+        }
     }
     let _ = widgets::menu_item;
 }

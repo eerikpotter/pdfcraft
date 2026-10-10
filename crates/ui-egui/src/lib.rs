@@ -339,7 +339,12 @@ pub struct RecentFile {
     pub size: usize,
 }
 
+/// Optional host menu without a dependency on a specific storage service.
+pub type FileMenuSection = Box<dyn FnMut(&mut egui::Ui, bool)>;
+
 pub struct PdfCraftApp {
+    /// Optional browser-host File menu section.
+    pub file_menu: Option<FileMenuSection>,
     pub session: Session,
     pub views: Vec<DocView>,
     /// `None` shows the Home tab.
@@ -592,6 +597,7 @@ impl Default for PdfCraftApp {
 impl PdfCraftApp {
     pub fn new() -> Self {
         Self {
+            file_menu: None,
             session: Session::new(),
             views: Vec::new(),
             active: None,
