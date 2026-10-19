@@ -244,6 +244,8 @@ pub fn color32(c: Rgb) -> Color32 {
 #[derive(Clone, Debug)]
 pub struct CommentPrefs {
     /// `/T` of new comments (Acrobat: Preferences ▸ Identity, default the login name).
+    /// Active host account, independent of the editable display name. Never persisted.
+    pub user_id: Option<String>,
     pub author: String,
     styles: Vec<(CommentTool, Style)>,
     /// Keep the tool selected after use (the pin).
@@ -257,6 +259,7 @@ pub struct CommentPrefs {
 impl Default for CommentPrefs {
     fn default() -> Self {
         Self {
+            user_id: None,
             author: login_name(),
             styles: ALL.iter().map(|t| (*t, Style::default_for(&t.sample()))).collect(),
             pinned: false,

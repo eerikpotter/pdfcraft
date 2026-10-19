@@ -13,13 +13,13 @@ icp-cloud = ["dep:sovereign-cloud-ui"]
 workspace = true
 
 [dependencies]
+sovereign-cloud-ui = { path = "../../vendor/sovereign-cloud-ui", optional = true }
 pdfcraft-engine = { workspace = true }
 pdfcraft-ui-egui = { workspace = true }
 eframe = { workspace = true, features = ["default_fonts", "glow", "persistence", "accesskit"] }
 egui = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
-sovereign-cloud-ui = { path = "../../vendor/sovereign-cloud-ui", optional = true }
 wasm-bindgen-futures = "0.4"
 web-sys = { version = "0.3", features = ["Window", "Document", "Element", "HtmlCanvasElement", "HtmlElement", "Location", "Url", "UrlSearchParams", "Response", "Event", "MessageEvent", "EventTarget"] }
 js-sys = "0.3"

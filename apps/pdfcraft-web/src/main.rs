@@ -128,11 +128,15 @@ impl eframe::App for WebShell {
     }
 
     fn logic(&mut self, ctx: &egui::Context, frame: &mut eframe::Frame) {
+        #[cfg(feature = "icp-cloud")]
+        self.1.sync_identity(&mut crate::cloud::Adapter(&mut self.0));
         self.0.logic(ctx, frame);
         self.publish_dirty_state();
     }
 
     fn ui(&mut self, ui: &mut egui::Ui, frame: &mut eframe::Frame) {
+        #[cfg(feature = "icp-cloud")]
+        self.1.sync_identity(&mut crate::cloud::Adapter(&mut self.0));
         self.0.ui(ui, frame);
         #[cfg(feature = "icp-cloud")]
         self.1.ui(ui.ctx(), &mut crate::cloud::Adapter(&mut self.0));
@@ -311,5 +315,5 @@ fn main() {
     eprintln!("pdfcraft-web targets wasm32: run `trunk serve` or `trunk build --release` in apps/pdfcraft-web");
 }
 
-#[cfg(all(target_arch = "wasm32", feature = "icp-cloud"))]
+#[cfg(all(any(target_arch = "wasm32", test), feature = "icp-cloud"))]
 mod cloud;
